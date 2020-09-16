@@ -15,6 +15,15 @@ const dummyTransactions = [
 
 let transactions = dummyTransactions;
 
+// Add Transaction
+function addTransaction(e) {
+  e.preventDefault();
+
+  if (text.value.trim() === '' || amount.value.trim() === '') {
+    alert('Please add a text and amount');
+  }
+}
+
 // Add transactions to DOM list
 
 function addTransactionDOM(transaction) {
@@ -43,7 +52,17 @@ function updateValues() {
      const total = amounts.reduce((acc, item) => (acc += item), 0)
      .toFixed(2);
 
-    console.log(total);
+const income = amounts
+  .filter(item => item > 0)
+  .reduce((acc, item) => (acc +=item), 0)
+  .toFixed(2);
+
+const expense = (amounts.filter(item => item < 0).reduce((acc, item) => (acc += item), 0) * -1).toFixed(2);
+
+balance.innerText = `$${total}`;
+money_plus.innerText = `$${income}`;
+money_minus.innerText = `$${expense}`;
+
 }
 
 
@@ -57,3 +76,5 @@ function init() {
 }
 
 init();
+
+form.addEventListener('submit', addTransaction);
